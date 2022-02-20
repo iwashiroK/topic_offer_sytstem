@@ -74,7 +74,6 @@ window.onload = $(function(){
     
     //random = randoms[i];
 
-    
   });
     
 
