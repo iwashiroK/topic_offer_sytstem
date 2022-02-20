@@ -1,0 +1,64 @@
+body{
+  margin:0px !important;
+}
+#box{
+  display: block;
+  position: relative;
+  border: 2px solid;
+  border-radius: 4px;
+  width: 60%;
+  height: 700px;
+  margin-left: 20%;
+  margin-top: 5%;
+  box-shadow: 3px 3px 4px gray;
+}
+
+.setting{
+  width: 4%;
+  height: 4%;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.use{
+  width: 4%;
+  height: 4%;
+  margin-left: 15px;
+  margin-top: 5px;
+}
+
+.square{
+  border: 2px solid;
+  font-size: 35px;
+  margin-top: 20%;
+  margin-left: 5%;
+  margin-right: 5%;
+  height: 300px;
+  padding: 5px;
+}
+
+.odai_out{
+  font-size: 35px;
+  text-align: center;
+  line-height:160px;
+  margin-top: 10%;
+  height: 100px;
+  padding: 5px;
+}
+
+.odai_in{
+  display: inline;
+  text-align: center;
+  font-size: 35px;
+  margin-top: 20%;
+  height: 100px;
+  padding: 5px;
+}
+
+.form{
+  display: inline;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 50px;
+}
