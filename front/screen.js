@@ -3,7 +3,8 @@ window.onload = $(function(){
   var max_val;
   var randoms = [];
   var random;
-  var i;
+  var topic_array = [];
+  var btn_count = 0;
 
   /** 話題の最大値を取得する */
   // $.ajax({
@@ -46,31 +47,36 @@ window.onload = $(function(){
   // 　　console.log("errorThrown : " + errorThrown.message);
   //   });
 
-    $('#btn').click(function(){
+  /** 上記で作成した乱数のidの話題を取得する */
+  $.ajax({
+    url: "http://localhost/back/screen.php",
+    type: "GET",
+    //data: {
+      //"random_val":random,
+    //},
+    dataType : "json",
+    timespan:1000
+  }).done(function(data){
+    console.log(data);
+    topic_array = data;
+    console.log(topic_array);
+  }).fail(function(XMLHttpRequest, textStatus, errorThrown){
+    console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+    console.log("textStatus : " + textStatus);
+    console.log("errorThrown : " + errorThrown.message);
+  });
+  
+  $('#btn').click(function(){
+    //ボタンをクリックした回数
+    btn_count++;
+    
+    $('.odai_in').html(topic_array[btn_count-1]);
+    
+    //random = randoms[i];
 
-      i = i +1;
-      random = randoms[i];
-
-      /** 上記で作成した乱数のidの話題を取得する */
-      $.ajax({
-        url: "http://localhost/back/screen.php",
-        type: "GET",
-        //data: {
-          //"random_val":random,
-        //},
-        dataType : "text",
-        timespan:1000
-      }).done(function(data){
-        console.log(data);
-        $('.odai_in').html(data);
-      }).fail(function(XMLHttpRequest, textStatus, errorThrown){
-        console.log("XMLHttpRequest : " + XMLHttpRequest.status);
-        console.log("textStatus : " + textStatus);
-        console.log("errorThrown : " + errorThrown.message);
-      });
-
-    });
-
+    
+  });
+    
 
 
 });
