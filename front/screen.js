@@ -1,6 +1,6 @@
 window.onload = $(function(){
   var max_init = 0;
-  var max_val;
+  var data_max_count = 0;
   var randoms = [];
   var random;
   var topic_array = [];
@@ -47,7 +47,7 @@ window.onload = $(function(){
   // 　　console.log("errorThrown : " + errorThrown.message);
   //   });
 
-  /** 上記で作成した乱数のidの話題を取得する */
+  //話題を取得する
   $.ajax({
     url: "http://localhost/back/screen.php",
     type: "GET",
@@ -59,13 +59,36 @@ window.onload = $(function(){
   }).done(function(data){
     console.log(data);
     topic_array = data;
+    data_max_count = data.length;
     console.log(topic_array);
+    console.log(data_max_count);
   }).fail(function(XMLHttpRequest, textStatus, errorThrown){
     console.log("XMLHttpRequest : " + XMLHttpRequest.status);
     console.log("textStatus : " + textStatus);
     console.log("errorThrown : " + errorThrown.message);
   });
-  
+
+  setTimeout(createRandom(data_max_count), 5000);
+
+  //重複しない乱数作成
+  function createRandom(data_max_count){
+    for(i = 0; i <= data_max_count; i++){
+      while(true){
+        var tmp = intRandom(0, data_max_count);
+        if(!randoms.includes(tmp)){
+          randoms.push(tmp);
+          break;
+        }
+      }
+    }
+  }
+
+  function intRandom(min, max){
+    return Math.floor( Math.random() * (max - min + 1)) + min;
+  }
+  console.log(randoms);
+
+  //次へボタンクリック
   $('#btn').click(function(){
     //ボタンをクリックした回数
     btn_count++;
@@ -73,7 +96,6 @@ window.onload = $(function(){
     $('.odai_in').html(topic_array[btn_count-1]);
     
     //random = randoms[i];
-
   });
     
 
