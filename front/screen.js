@@ -60,6 +60,7 @@ window.onload = $(function(){
   });
   
   
+  
   //次へボタンクリック
   $('#btn').click(function(){
     
