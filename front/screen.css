@@ -1,9 +1,13 @@
+html{
+  position: relative;
+
+}
+
 body{
   margin:0px !important;
 }
 #box{
   display: block;
-  position: relative;
   border: 2px solid;
   border-radius: 4px;
   width: 60%;
@@ -13,18 +17,22 @@ body{
   box-shadow: 3px 3px 4px gray;
 }
 
+.btn_category {
+  margin-left: 2%;
+}
+
 .setting{
   width: 4%;
   height: 4%;
   margin-left: 10px;
-  margin-top: 5px;
+  margin-top: 2%;
 }
 
 .use{
   width: 4%;
   height: 4%;
   margin-left: 15px;
-  margin-top: 5px;
+  margin-top: 2%;
 }
 
 .square{
@@ -55,10 +63,39 @@ body{
   padding: 5px;
 }
 
-.form{
-  display: inline;
+#btn_next{
+  margin-top: 3%;
+  margin-left: 87%;
+}
+
+#box_category{
+  display:none;
   position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 50px;
+  display: block;
+  border: 2px solid;
+  border-radius: 4px;
+  width: 20%;
+  height: 700px;
+  margin-left: 20%;
+  box-shadow: 3px 3px 4px gray;
+  background-color:white;
+}
+
+
+.square_category{
+  overflow-wrap: break-word;
+  margin-top: 5%;
+  margin-left:3%;
+  margin-right:3%;
+  margin-bottom: 5%;
+  height: 650px;
+}
+
+#confirm_category{
+  margin-top: 3%;
+  margin-left:3%;
+}
+
+#category_bun{
+  margin-top: 3%;  
 }
