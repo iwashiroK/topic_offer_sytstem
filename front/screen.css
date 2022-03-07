@@ -64,9 +64,14 @@ body{
   padding: 5px;
 }
 
+#btn_back{
+  margin-top: 3%;
+  margin-left: 73%;
+}
+
 #btn_next{
   margin-top: 3%;
-  margin-left: 87%;
+  margin-left: 3%;
 }
 
 #box_category{

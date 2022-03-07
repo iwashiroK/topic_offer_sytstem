@@ -3,7 +3,7 @@ window.onload = $(function(){
   var randoms = [];
   var topic_array = [];
   var category_array = [];
-  var btn_count = 0;
+  var next_btn_count = -1;
   
   //初期表示処理
   //ajax関数のリターン値としてDeferredオブジェクトを受け取る
@@ -11,25 +11,44 @@ window.onload = $(function(){
 
   deferredInit.promise().then(function(){
     console.log("ランダム"+Date.now());
-    createRandom(data_max_count-1);
+    createRandom(data_max_count);
     console.log(randoms);
   });
   
   
   
-  //次へボタンクリック
+  //次へボタン押下
   $('#btn_next').click(function(){
+
+    //次へボタンをクリックした回数
+    next_btn_count++;
+    console.log(next_btn_count);
     
     //格納された配列の乱数のお題を取得する
-    $('.odai_in').html(topic_array[randoms[btn_count]]);
-
-    //ボタンをクリックした回数
-    btn_count++;
+    $('.odai_in').html(topic_array[randoms[next_btn_count]]);
 
     //次へ押下回数と話題の要素数が合致した場合
-    if(btn_count + 1 == topic_array.length){
+    if(next_btn_count + 1 == topic_array.length){
       //ボタン押下回数リセット
-      btn_count = 0;
+      next_btn_count = -1;
+    }
+  });
+
+
+  //戻るボタン押下
+  $('#btn_back').click(function(){
+    
+    //戻るボタンをクリックした回数
+    next_btn_count--;
+    console.log(next_btn_count);
+    
+    //格納された配列の乱数のお題を取得する
+    $('.odai_in').html(topic_array[randoms[next_btn_count]]);
+
+    //次へ押下回数が0になった場合
+    if(next_btn_count == 0){
+      //ボタン押下回数を話題配列の要素数にする
+      next_btn_count = topic_array.length - 1;
     }
   });
 
@@ -74,13 +93,14 @@ window.onload = $(function(){
       deferred.promise().then(function(){
         //絞ったデータ数で再度ランダム数字作成
         console.log(data_max_count);
-        createRandom(data_max_count-1);
+        createRandom(data_max_count);
+        console.log(randoms);
       });
 
     }
     
     //次へをクリックした回数をリセット
-    btn_count = 0;
+    next_btn_count = -1;
     //チェックボックス要素を削除する
     $('.square_category').empty();
     //カテゴリ選択メニューを表示または非表示にする
@@ -188,7 +208,7 @@ window.onload = $(function(){
       dataType : 'json',
       timespan:1000
     }).done(function(data){
-
+      topic_array = data;
       data_max_count = data.length;
       if(data_max_count == 0){
         topic_array.length = 0;
