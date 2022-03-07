@@ -44,7 +44,7 @@ window.onload = $(function(){
     });
 
     //カテゴリ選択メニューを切り替える
-    $('#box_category').toggle();
+    $('#box_category').toggleClass('js_active');
   });
 
 
@@ -72,13 +72,9 @@ window.onload = $(function(){
     //チェックボックス要素を削除する
     $('.square_category').empty();
     //カテゴリ選択メニューを切り替える
-    $('#box_category').toggle();
+    $('#box_category').toggleClass('js_active');
   });
-  
 
-
-  
-  
 
 
   
@@ -100,61 +96,43 @@ window.onload = $(function(){
     randoms = arr;
   }
 
-  //for2回の中にifで分岐させているため処理が重い
-  // function createRandom(data_max_count){
-  //   for(i = 0; i <= data_max_count; i++){
-    //     while(true){
-      //       var tmp = intRandom(0, data_max_count);
-  //       if(!randoms.includes(tmp)){
-    //         randoms.push(tmp);
-    //         break;
-    //       }
-    //     }
-    //   }
-    // }
-    // //minからmaxの間での乱数作成
-    // function intRandom(min, max){
-      //   return Math.floor( Math.random() * (max - min + 1)) + min;
-      // }
+  //初期表示ajax通信を行う
+  function ajax_initfunction(){
+    console.log('ajax start');
+    //完了を知らせるためにDeferredオブジェクトを生成しそれを返す
+    var deferred = new $.Deferred();
 
-
-      //初期表示ajax通信を行う
-      function ajax_initfunction(){
-        console.log('ajax start');
-        //完了を知らせるためにDeferredオブジェクトを生成しそれを返す
-        var deferred = new $.Deferred();
+    //話題を取得する
+    $.ajax({
+      url: "http://localhost/back/screen.php",
+      type: "GET",
+      //data: {
+        //"random_val":random,
+      //},
+      dataType : "json",
+      timespan:1000
+    }).done(function(data){
+      //条件で絞った話題で上書きする
+      topic_array = data;
+      data_max_count = topic_array.length;
+      console.log(topic_array);
+    }).fail(function(XMLHttpRequest, textStatus, errorThrown){
+      console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+      console.log("textStatus : " + textStatus);
+      console.log("errorThrown : " + errorThrown.message);
+    }).always(function(){
+      console.log('ajax finish');
+      //ajax処理を終了したことをDeferredオブジェクトに通知
+      deferred.resolve();
+    });
+    //完了を知らせるためにDeferredオブジェクトを生成しそれを返す
+    return deferred;
+  }
     
-        //話題を取得する
-        $.ajax({
-          url: "http://localhost/back/screen.php",
-          type: "GET",
-          //data: {
-            //"random_val":random,
-          //},
-          dataType : "json",
-          timespan:1000
-        }).done(function(data){
-          //条件で絞った話題で上書きする
-          topic_array = data;
-          data_max_count = topic_array.length;
-          console.log(topic_array);
-        }).fail(function(XMLHttpRequest, textStatus, errorThrown){
-          console.log("XMLHttpRequest : " + XMLHttpRequest.status);
-          console.log("textStatus : " + textStatus);
-          console.log("errorThrown : " + errorThrown.message);
-        }).always(function(){
-          console.log('ajax finish');
-          //ajax処理を終了したことをDeferredオブジェクトに通知
-          deferred.resolve();
-        });
-        //完了を知らせるためにDeferredオブジェクトを生成しそれを返す
-        return deferred;
-      }
-      
-      //カテゴリ一覧取得ajax通信を行う
-      function ajax_getCategoryFunction(){
-        console.log('ajax start');
-        //完了を知らせるためにDeferredオブジェクトを生成しそれを返す
+  //カテゴリ一覧取得ajax通信を行う
+  function ajax_getCategoryFunction(){
+    console.log('ajax start');
+    //完了を知らせるためにDeferredオブジェクトを生成しそれを返す
     var deferred = new $.Deferred();
 
     //話題を取得する
