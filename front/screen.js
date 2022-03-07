@@ -4,7 +4,6 @@ window.onload = $(function(){
   var topic_array = [];
   var category_array = [];
   var next_btn_count = -1;
-  var back_btn_count = 0;
   
   //初期表示処理
   //ajax関数のリターン値としてDeferredオブジェクトを受け取る
