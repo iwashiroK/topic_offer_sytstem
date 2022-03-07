@@ -48,7 +48,7 @@ window.onload = $(function(){
     //次へ押下回数が0になった場合
     if(next_btn_count == 0){
       //ボタン押下回数を話題配列の要素数にする
-      next_btn_count = topic_array.length - 1;
+      next_btn_count = topic_array.length;
     }
   });
 
