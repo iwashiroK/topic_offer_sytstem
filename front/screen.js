@@ -3,7 +3,6 @@ window.onload = $(function(){
   var randoms = [];
   var topic_array = [];
   var category_array = [];
-  var filter_category_array = [];
   var btn_count = 0;
   
   //初期表示処理
@@ -26,6 +25,12 @@ window.onload = $(function(){
 
     //ボタンをクリックした回数
     btn_count++;
+
+    //次へ押下回数と話題の要素数が合致した場合
+    if(btn_count + 1 == topic_array.length){
+      //ボタン押下回数リセット
+      btn_count = 0;
+    }
   });
 
 
@@ -67,14 +72,15 @@ window.onload = $(function(){
       var deferred = ajax_filterCategoryfunction(checked_category);
   
       deferred.promise().then(function(){
-        if(data_max_count != 0){
-          //絞ったデータ数で再度ランダム数字作成
-          console.log(data_max_count);
-          createRandom(data_max_count-1);
-        }
+        //絞ったデータ数で再度ランダム数字作成
+        console.log(data_max_count);
+        createRandom(data_max_count-1);
       });
-    }
 
+    }
+    
+    //次へをクリックした回数をリセット
+    btn_count = 0;
     //チェックボックス要素を削除する
     $('.square_category').empty();
     //カテゴリ選択メニューを表示または非表示にする
