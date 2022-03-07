@@ -19,18 +19,17 @@
   }
   
   try{
-    $topic = [];
-    $fetch_count = 0;
-
-    $stmt = $pdo->query('SELECT * from topictable');
+    $stmt = $pdo->query('SELECT * from categorytable');
+    $category = array();
+    $count = 0;
     while ($row = $stmt->fetch()) {
-      $topic[$fetch_count] = $row['topic'];
-      $fetch_count++;
+      $category[$count] = $row;
+      $count++;
     }
     header("Access-Control-Allow-Origin: *");
     header('Content-Type: application/json; charset=UTF-8');
-    //echo $topic;
-    echo json_encode($topic, JSON_UNESCAPED_UNICODE);
+    echo json_encode($category, JSON_UNESCAPED_UNICODE);
+    //var_dump($row);
   } catch (PDOException $e) {
     echo $e->getMessage() . PHP_EOL;
     echo $e->getMessage();
