@@ -43,7 +43,7 @@ window.onload = $(function(){
       console.log(randoms);
     });
 
-    //カテゴリ選択メニューを切り替える
+    //カテゴリ選択メニューを表示または非表示にする
     $('#box_category').toggleClass('js_active');
   });
 
@@ -58,20 +58,26 @@ window.onload = $(function(){
     });
     console.log(checked_category);
 
-    //選択されたカテゴリの話題を取得しないajax通信
-    //ajax関数のリターン値としてDeferredオブジェクトを受け取る
-    var deferred = ajax_filterCategoryfunction(checked_category);
+    //カテゴリ選択にチェックがない場合、話題をすべて取得する
+    if(checked_category.length == 0){
+      ajax_getCategoryFunction();
+    }else{
+      //選択されたカテゴリの話題を取得しないajax通信
+      //ajax関数のリターン値としてDeferredオブジェクトを受け取る
+      var deferred = ajax_filterCategoryfunction(checked_category);
+  
+      deferred.promise().then(function(){
+        if(data_max_count != 0){
+          //絞ったデータ数で再度ランダム数字作成
+          console.log(data_max_count);
+          createRandom(data_max_count-1);
+        }
+      });
+    }
 
-    deferred.promise().then(function(){
-      if(data_max_count != 0){
-        //絞ったデータ数で再度ランダム数字作成
-        console.log(data_max_count);
-        createRandom(data_max_count-1);
-      }
-    });
     //チェックボックス要素を削除する
     $('.square_category').empty();
-    //カテゴリ選択メニューを切り替える
+    //カテゴリ選択メニューを表示または非表示にする
     $('#box_category').toggleClass('js_active');
   });
 
