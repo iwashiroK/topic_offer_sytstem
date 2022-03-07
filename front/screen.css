@@ -1,11 +1,12 @@
 html{
   position: relative;
-
 }
 
 body{
   margin:0px !important;
+  padding: 0px;
 }
+
 #box{
   display: block;
   border: 2px solid;
@@ -69,16 +70,23 @@ body{
 }
 
 #box_category{
-  display:none;
+  left: -100%;
+  opacity: 0;
   position: absolute;
   display: block;
   border: 2px solid;
   border-radius: 4px;
   width: 20%;
   height: 700px;
-  margin-left: 20%;
+  margin-left: 18%;
   box-shadow: 3px 3px 4px gray;
   background-color:white;
+}
+
+#box_category.js_active {
+  left: 10px;
+  z-index: 9999;
+  opacity: 1;
 }
 
 
