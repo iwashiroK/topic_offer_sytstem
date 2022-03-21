@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./register_topic.css">
+    <title></title>
+  </head>
+  <body>
+    <div id="box">
+      <div id="message"></div>
+      <div id="top">
+        <label for="select_category">カテゴリ選択：</label>
+        <select id="category" required>
+          <option value="">カテゴリを選択してください</option>
+        </select>
+      </div>
+      <div class="square">
+        <div>
+          <label for="register_topic">登録する話題</label>
+        </div>
+        <input type="text" id="register_topic_text" name="topic" value="" required maxlength="512">
+      </div>
+      <div id="btn">
+        <button id="btn_back" type="button" name="back">戻る</button>
+        <button id="btn_register" type="button" name="register">登録する</button>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./register_topic.js"></script>
+  </body>
+</html>

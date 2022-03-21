@@ -15,8 +15,12 @@ window.onload = $(function(){
     console.log(randoms);
   });
   
-  
-  
+
+  //話題を登録するボタン押下時、画面遷移する
+  $('#btn_register_topic').click(function(){
+    window.location.href = "./register_topic.html";
+  });
+
   //次へボタン押下
   $('#btn_next').click(function(){
 

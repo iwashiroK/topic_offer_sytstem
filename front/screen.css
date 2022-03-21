@@ -19,7 +19,12 @@ body{
 }
 
 .btn_category {
-  margin-left: 2%;
+  margin-left: 5%;
+}
+
+#btn_register_topic{
+  width: 90%;
+  text-align: right;
 }
 
 .setting{
@@ -39,7 +44,7 @@ body{
 .square{
   border: 2px solid;
   font-size: 35px;
-  margin-top: 20%;
+  margin-top: 15%;
   margin-left: 5%;
   margin-right: 5%;
   height: 300px;
@@ -64,14 +69,15 @@ body{
   padding: 5px;
 }
 
-#btn_back{
+#btn{
+  display: block;
+  width: 90%;
+  text-align: right;
   margin-top: 3%;
-  margin-left: 73%;
 }
 
 #btn_next{
-  margin-top: 3%;
-  margin-left: 3%;
+  margin-left: 2%;  
 }
 
 #box_category{
