@@ -53,5 +53,6 @@ select{
   margin-left: 20%;
   margin-top: 5%;
   color:red;
-  font-size: small;
+  font-size: large;
+  font-weight: bold;
 }

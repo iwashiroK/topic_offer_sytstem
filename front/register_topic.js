@@ -10,7 +10,6 @@ window.onload = $(function(){
       //<option value="選択肢1">選択肢1</option>
       $('#category').append(add_category);
     });
-    console.log(randoms);
   });
 
 
@@ -33,6 +32,9 @@ window.onload = $(function(){
 
     if (confirm('登録しますか？')) {
       //登録処理
+      //カテゴリ一覧を取得するajax通信を行う
+      ajax_updateTopicfunction($('#category').val(), $('#register_topic_text').val());
+
     }else{
       return;
     }
@@ -76,6 +78,43 @@ window.onload = $(function(){
     });
     //完了を知らせるためにDeferredオブジェクトを生成しそれを返す
     return deferred;
+  }
+
+  //カテゴリが絞られた後の話題取得時にajax通信を行う
+  function ajax_updateTopicfunction(category_id, topic){
+    console.log('ajax start');
+
+    $.ajax({
+      url: 'http://localhost/back/updateTopic.php',
+      type: 'POST',
+      data: {
+        "category_id":category_id,
+        "topic":topic,
+      },
+      //dataType : 'text',
+      dataType : 'json',
+      timespan:1000
+    }).done(function(data){
+      console.log(data);
+      console.log(data.error);
+      switch(data.status){
+        case "成功" :
+          $('#message').append("話題の登録に成功しました");
+        break;
+        case "失敗" :
+          $('#message').append("話題の登録に失敗しました");
+        break;
+        case "話題重複エラー" :
+          $('#message').append("話題が重複しています");
+        break;
+      }
+    }).fail(function(XMLHttpRequest, textStatus, errorThrown){
+      console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+      console.log("textStatus : " + textStatus);
+      console.log("errorThrown : " + errorThrown.message);
+    }).always(function(){
+      console.log('ajax finish');
+    });
   }
 
 });
