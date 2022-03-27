@@ -17,7 +17,7 @@
     echo $e->getMessage();
     echo "接続失敗";
   }
-  
+
   
   try{
     $query = '';
