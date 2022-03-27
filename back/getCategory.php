@@ -22,19 +22,22 @@
     $stmt = $pdo->query('SELECT * from categorytable');
     $category = array();
     $count = 0;
+    $res = array(
+      'topic' => [],
+      'error' => ''
+    );
+
     while ($row = $stmt->fetch()) {
       $category[$count] = $row;
       $count++;
     }
     header("Access-Control-Allow-Origin: *");
     header('Content-Type: application/json; charset=UTF-8');
-    echo json_encode($category, JSON_UNESCAPED_UNICODE);
-    //var_dump($row);
+    $res['topic'] = $category;
   } catch (PDOException $e) {
-    echo $e->getMessage() . PHP_EOL;
-    echo $e->getMessage();
-    echo "接続失敗";
+    $res['error'] = $e->getMessage().PHP_EOL + "：" + $e->getMessage() + "：" + "接続失敗";
     exit;
   }
+  echo json_encode($res, JSON_UNESCAPED_UNICODE);
   $pdo = null;
 ?>

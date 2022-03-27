@@ -25,6 +25,10 @@
     $topic = [];
     $query_count = 0;
     $fetch_count = 0;
+    $res = array(
+      'topic' => [],
+      'error' => ''
+    );
 
     header("Access-Control-Allow-Origin: *");
     //フロントからチェックされたカテゴリーを取得する
@@ -46,13 +50,11 @@
     }
     header("Access-Control-Allow-Origin: *");
     header('Content-Type: application/json; charset=UTF-8');
-    //echo $topic;
-    echo json_encode($topic, JSON_UNESCAPED_UNICODE);
+    $res['topic'] = $topic;
   } catch (PDOException $e) {
-    echo $e->getMessage() . PHP_EOL;
-    echo $e->getMessage();
-    echo "接続失敗";
+    $res['error'] = $e->getMessage().PHP_EOL + "：" + $e->getMessage() + "：" + "接続失敗";
     exit;
   }
+  echo json_encode($res, JSON_UNESCAPED_UNICODE);
   $pdo = null;
 ?>
