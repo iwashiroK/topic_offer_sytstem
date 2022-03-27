@@ -36,7 +36,7 @@
     //echo $topic;
     $res['topic'] = $topic;
   } catch (PDOException $e) {
-    $res['error'] = $e->getMessage().PHP_EOL + "：" + $e->getMessage() + "：" + "接続失敗";
+    $res['error'] = $e->getMessage().PHP_EOL . "：" . $e->getMessage() . "：" . "失敗";
     exit;
   }
   echo json_encode($res, JSON_UNESCAPED_UNICODE);
