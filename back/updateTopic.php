@@ -72,7 +72,7 @@
       
     }
   } catch (PDOException $e) {
-    $res['erorr'] = $e->getMessage().PHP_EOL + $e->getMessage();
+    $res['erorr'] = $e->getMessage().PHP_EOL . $e->getMessage();
     $res['status'] = "失敗";
     exit;
   }

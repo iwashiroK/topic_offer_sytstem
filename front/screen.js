@@ -149,9 +149,9 @@ window.onload = $(function(){
       timespan:1000
     }).done(function(data){
       //条件で絞った話題で上書きする
-      topic_array = data;
+      topic_array = data.topic;
       data_max_count = topic_array.length;
-      console.log(topic_array);
+      console.log(data);
     }).fail(function(XMLHttpRequest, textStatus, errorThrown){
       console.log("XMLHttpRequest : " + XMLHttpRequest.status);
       console.log("textStatus : " + textStatus);
@@ -181,8 +181,8 @@ window.onload = $(function(){
       dataType : "json",
       timespan:1000
     }).done(function(data){
-      category_array = data;
-      console.log(category_array);
+      category_array = data.topic;
+      console.log(data);
     }).fail(function(XMLHttpRequest, textStatus, errorThrown){
       console.log("XMLHttpRequest : " + XMLHttpRequest.status);
       console.log("textStatus : " + textStatus);
@@ -212,7 +212,7 @@ window.onload = $(function(){
       dataType : 'json',
       timespan:1000
     }).done(function(data){
-      topic_array = data;
+      topic_array = data.topic;
       data_max_count = data.length;
       if(data_max_count == 0){
         topic_array.length = 0;
