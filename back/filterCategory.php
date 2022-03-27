@@ -19,7 +19,6 @@
   }
   
   try{
-    $select_all = 'SELECT * from topictable where category_id != ';
     $query = '';
     $checked_categories = [];
     $topic = [];
@@ -33,20 +32,22 @@
     header("Access-Control-Allow-Origin: *");
     //フロントからチェックされたカテゴリーを取得する
     $checked_categories = $_POST['checked_category'];
-
+    
     //チェックされたカテゴリーが存在する場合、クエリで取得する値を絞る
     if (!empty($checked_categories)){
-      $query = $select_all . intval($checked_categories[0]);
+      $stmt = $pdo->prepare('SELECT * from topictable where category_id != :category_id');
+      $query = intVal($checked_categories[0]);
       for($i = 0; $i < count($checked_categories); $i++){
         if($i != 0){
           $query = $query . ' and category_id != ' . intval($checked_categories[$i]);
         }
       }
-    }
-    $stmt = $pdo->query($query);
-    while ($row = $stmt->fetch()) {
-      $topic[$fetch_count] = $row['topic'];
-      $fetch_count++;
+      $stmt->bindValue(':category_id', $query);
+      $stmt->execute();
+      while ($row = $stmt->fetch()) {
+        $topic[$fetch_count] = $row['topic'];
+        $fetch_count++;
+      }
     }
     header("Access-Control-Allow-Origin: *");
     header('Content-Type: application/json; charset=UTF-8');

@@ -31,7 +31,7 @@
       $topic[$fetch_count] = $row['topic'];
       $fetch_count++;
     }
-    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Origin: screen.js");
     header('Content-Type: application/json; charset=UTF-8');
     //echo $topic;
     $res['topic'] = $topic;

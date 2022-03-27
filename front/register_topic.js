@@ -65,7 +65,7 @@ window.onload = $(function(){
       dataType : "json",
       timespan:1000
     }).done(function(data){
-      category_array = data;
+      category_array = data.topic;
       console.log(category_array);
     }).fail(function(XMLHttpRequest, textStatus, errorThrown){
       console.log("XMLHttpRequest : " + XMLHttpRequest.status);

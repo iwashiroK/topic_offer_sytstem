@@ -41,7 +41,7 @@
     if (!empty($update_topic)){
       //すでに同じ話題が登録されていないかチェックする
       $stmt = $pdo->prepare('SELECT topic from topictable where topic = :topic');
-      $stmt->bindValue(':topic', $update_topic['topic']);
+      $stmt->bindValue(':topic', htmlspecialchars($update_topic['topic'], ENT_QUOTES, 'UTF-8'));
       $stmt->execute();
       $topic_check = $stmt->fetch();
       
@@ -67,7 +67,7 @@
       $stmt = $pdo->prepare('INSERT INTO topictable values(:id, :category_id, :topic)');
       $stmt->bindValue(':id', intVal($max_id['max(id)']) + 1, PDO::PARAM_INT);
       $stmt->bindValue(':category_id', intVal($update_topic['category_id']), PDO::PARAM_INT);
-      $stmt->bindValue(':topic', $update_topic['topic']);
+      $stmt->bindValue(':topic', htmlspecialchars($update_topic['topic'], ENT_QUOTES, 'UTF-8'));
       $stmt->execute();
       
     }
@@ -76,6 +76,6 @@
     $res['status'] = "失敗";
     exit;
   }
-  echo htmlspecialchars(json_encode($res, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8');
+  echo json_encode($res, JSON_UNESCAPED_UNICODE);
   $pdo = null;
 ?>
