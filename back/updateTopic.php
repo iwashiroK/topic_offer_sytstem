@@ -18,6 +18,7 @@
     echo "接続失敗";
   }
   
+  
   try{
     $query = '';
     $update_topic = [];
