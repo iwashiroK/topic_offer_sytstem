@@ -213,12 +213,12 @@ window.onload = $(function(){
       timespan:1000
     }).done(function(data){
       topic_array = data.topic;
-      data_max_count = data.length;
+      data_max_count = data.topic.length;
       if(data_max_count == 0){
         topic_array.length = 0;
         $('.odai_in').html("データがありません。");
       }else{
-        topic_array = data;
+        topic_array = data.topic;
       }
       console.log(data);
       console.log(data_max_count);
