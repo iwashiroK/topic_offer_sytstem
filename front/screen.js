@@ -21,6 +21,9 @@ window.onload = $(function(){
     window.location.href = "./register_topic.html";
   });
 
+  //初期状態で戻るボタンは非活性にしておく
+  $("#btn_back").prop("disabled", true);
+
   //次へボタン押下
   $('#btn_next').click(function(){
 
@@ -31,10 +34,15 @@ window.onload = $(function(){
     //格納された配列の乱数のお題を取得する
     $('.odai_in').html(topic_array[randoms[next_btn_count]]);
 
-    //次へ押下回数と話題の要素数が合致した場合
+    //次へボタンを押下した場合、戻るボタンを活性化
+    if(next_btn_count != -1){
+      $("#btn_back").prop("disabled", false);
+    }
+
+    //次へボタン押下回数が話題配列の最大要素数に達した場合
     if(next_btn_count + 1 == topic_array.length){
-      //ボタン押下回数リセット
-      next_btn_count = -1;
+      //次へボタン非活性化
+      $("#btn_next").prop("disabled", true);
     }
   });
 
@@ -49,10 +57,14 @@ window.onload = $(function(){
     //格納された配列の乱数のお題を取得する
     $('.odai_in').html(topic_array[randoms[next_btn_count]]);
 
-    //次へ押下回数が0になった場合
-    if(next_btn_count == 0){
-      //ボタン押下回数を話題配列の要素数にする
-      next_btn_count = topic_array.length;
+    //戻るボタン押下時に
+    if(next_btn_count == 0 || next_btn_count == -1){
+      $("#btn_back").prop("disabled", true);
+    }
+
+    //話題配列の最大要素数に達した時に活性化した次へボタンを、戻るボタンを押下した時に、活性化させる
+    if(next_btn_count == topic_array.length-2){
+      $("#btn_next").prop("disabled", false);
     }
   });
 
