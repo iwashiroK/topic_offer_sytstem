@@ -1,5 +1,8 @@
 window.onload = $(function(){
 
+  var category_array = [];
+  var category_topic_array = [];
+
   //カテゴリ一覧を取得するajax通信を行う
   //ajax関数のリターン値としてDeferredオブジェクトを受け取る
   var deferred = ajax_getCategoryFunction();
@@ -46,7 +49,52 @@ window.onload = $(function(){
   });
 
 
+  //カテゴリ話題一覧取得ボタンクリック
+  $('.btn_catgory_topic').click(function(){
+    //カテゴリ一覧を取得するajax通信を行う
+    //ajax関数のリターン値としてDeferredオブジェクトを受け取る
+    var deferred = ajax_getCategoryTopicFunction();
+    
+    deferred.promise().then(function(){
+      var i = 0;
+      var j = 0;
+      var add_category_topic = '';
 
+      //取得したカテゴリ/話題配列一要素単位でループする
+      category_topic_array.forEach(element => {
+        if(element['category_id'] == i){
+          //初めのループのみカテゴリ要素追加
+          if(j == 0){
+            add_category_topic += '<li>' + element['category_name'] + '</li><ul>';
+            j++;
+          }
+          //話題要素追加
+          add_category_topic += '<li>' + element['topic'] + '</li>';
+        }else{
+          j = 0;
+          i++;
+          if(j == 0){
+            add_category_topic += '</ul>';
+          }
+        }
+      });
+      $('.square_category').append(add_category_topic);
+    });
+
+    //カテゴリ選択メニューを表示または非表示にする
+    $('#box_category').toggleClass('js_active');
+  });
+
+
+  //確定して閉じるボタンクリック
+  $('#btn_close').click(function(){
+
+    //チェックボックス要素を削除する
+    $('.square_category').empty();
+    
+    //カテゴリ選択メニューを表示または非表示にする
+    $('#box_category').toggleClass('js_active');
+  });
 
 
   //カテゴリ一覧取得ajax通信を行う
@@ -67,6 +115,39 @@ window.onload = $(function(){
     }).done(function(data){
       category_array = data.topic;
       console.log(category_array);
+      console.log(data.error);
+    }).fail(function(XMLHttpRequest, textStatus, errorThrown){
+      console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+      console.log("textStatus : " + textStatus);
+      console.log("errorThrown : " + errorThrown.message);
+    }).always(function(){
+      console.log('ajax finish');
+      //ajax処理を終了したことをDeferredオブジェクトに通知
+      deferred.resolve();
+    });
+    //完了を知らせるためにDeferredオブジェクトを生成しそれを返す
+    return deferred;
+  }
+
+  //カテゴリ一覧取得ajax通信を行う
+  function ajax_getCategoryTopicFunction(){
+    console.log('ajax start');
+    //完了を知らせるためにDeferredオブジェクトを生成しそれを返す
+    var deferred = new $.Deferred();
+
+    //話題を取得する
+    $.ajax({
+      url: "http://localhost/back/getCategoryTopic.php",
+      type: "GET",
+      //data: {
+        //"random_val":random,
+      //},
+      dataType : "json",
+      timespan:1000
+    }).done(function(data){
+      category_topic_array = data.category_topic;
+      console.log(category_topic_array);
+      console.log(data.error);
     }).fail(function(XMLHttpRequest, textStatus, errorThrown){
       console.log("XMLHttpRequest : " + XMLHttpRequest.status);
       console.log("textStatus : " + textStatus);
