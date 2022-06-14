@@ -14,6 +14,8 @@
       'topic' => [],
       'error' => ''
     );
+    $sql = 'SELECT * from topictable where category_id != :category_id';
+    $sql_add = ' and category_id != :category_id';
 
     header('Content-Type: application/json; charset=UTF-8');
     //フロントからチェックされたカテゴリーを取得する
@@ -21,14 +23,23 @@
     
     //チェックされたカテゴリーが存在する場合、クエリで取得する値を絞る
     if (!empty($checked_categories)){
-      $stmt = $pdo->prepare('SELECT * from topictable where category_id != :category_id');
-      $query = intVal($checked_categories[0]);
-      for($i = 0; $i < count($checked_categories); $i++){
-        if($i != 0){
-          $query = $query . ' and category_id != ' . intval($checked_categories[$i]);
+      if(count($checked_categories) == 1){
+        $stmt = $pdo->prepare($sql);
+        $query = intVal($checked_categories[0]);
+        $stmt->bindValue(':category_id', $query, PDO::PARAM_INT);
+      }else if(count($checked_categories) > 1){
+        for($i = 1; $i < count($checked_categories); $i++){
+          $sql = $sql . $sql_add . strval($i);
+        }
+        $stmt = $pdo->prepare($sql);
+        for($i = 0; $i < count($checked_categories); $i++){
+          if($i == 0){
+            $stmt->bindValue(':category_id', $checked_categories[$i], PDO::PARAM_INT);  
+          }else{
+            $stmt->bindValue(':category_id'.strval($i), $checked_categories[$i], PDO::PARAM_INT);
+          }
         }
       }
-      $stmt->bindValue(':category_id', $query);
       $stmt->execute();
       while ($row = $stmt->fetch()) {
         $topic[$fetch_count] = $row['topic'];
