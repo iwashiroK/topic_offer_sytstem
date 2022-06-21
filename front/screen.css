@@ -22,10 +22,17 @@ body{
   margin-left: 5%;
 }
 
+#btn_register_category{
+  width: 90%;
+  text-align: right;
+  margin-bottom: 4%;
+}
+
 #btn_register_topic{
   width: 90%;
   text-align: right;
 }
+
 
 .setting{
   width: 4%;

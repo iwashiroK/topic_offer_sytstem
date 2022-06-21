@@ -21,6 +21,11 @@ window.onload = $(function(){
     window.location.href = "./register_topic.html";
   });
 
+  //話題を登録するボタン押下時、画面遷移する
+  $('#btn_register_category').click(function(){
+    window.location.href = "./register_category.html";
+  });
+
   //初期状態で戻るボタンは非活性にしておく
   $("#btn_back").prop("disabled", true);
 
