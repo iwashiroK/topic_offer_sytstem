@@ -14,13 +14,10 @@
       'status' => '成功',
       'error' => ''
     );
-    //echo json_encode($res, JSON_UNESCAPED_UNICODE);
 
     header('Content-Type: application/json; charset=UTF-8');
     //フロントからチェックされたカテゴリーを取得する
     $update_topic = $_POST;
-    //echo json_encode($update_topic['category_id'], JSON_UNESCAPED_UNICODE);
-
     
     if (!empty($update_topic)){
       //すでに同じ話題が登録されていないかチェックする
@@ -41,11 +38,6 @@
       $stmt->bindValue(':id', intVal($update_topic['category_id']), PDO::PARAM_INT);
       $stmt->execute();
       $max_id = $stmt->fetch();
-      //echo json_encode($max_id['max(id)'], JSON_UNESCAPED_UNICODE);
-
-      // echo json_encode($id, JSON_UNESCAPED_UNICODE);
-      // echo json_encode($update_topic['topic'], JSON_UNESCAPED_UNICODE);
-      // echo json_encode($update_topic['category_id'], JSON_UNESCAPED_UNICODE);
 
       //画面から取得した話題を登録する
       $stmt = $pdo->prepare('INSERT INTO topictable values(:id, :category_id, :topic)');
