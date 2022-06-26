@@ -41,7 +41,11 @@
 
       //画面から取得した話題を登録する
       $stmt = $pdo->prepare('INSERT INTO topictable values(:id, :category_id, :topic)');
-      $stmt->bindValue(':id', intVal($max_id['max(id)']) + 1, PDO::PARAM_INT);
+      if($max_id['max(id)'] == null){
+        $stmt->bindValue(':id', 0, PDO::PARAM_INT);
+      }else{
+        $stmt->bindValue(':id', intVal($max_id['max(id)']) + 1, PDO::PARAM_INT);
+      }
       $stmt->bindValue(':category_id', intVal($update_topic['category_id']), PDO::PARAM_INT);
       $stmt->bindValue(':topic', htmlspecialchars($update_topic['topic'], ENT_QUOTES, 'UTF-8'));
       $stmt->execute();
