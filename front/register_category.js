@@ -117,12 +117,6 @@ window.onload = $(function(){
     //カテゴリ選択メニューを表示または非表示にする
     $('#box_category').toggleClass('js_active');
   });
-
-
-  //カテゴリidに合致するトピックの数(idの数)の数を取得する
-  function getTopicCount(){
-
-  }
   
 
   //カテゴリ一覧取得ajax通信を行う
