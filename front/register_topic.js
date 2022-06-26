@@ -56,29 +56,69 @@ window.onload = $(function(){
     var deferred = ajax_getCategoryTopicFunction();
     
     deferred.promise().then(function(){
+      
       var i = 0;
+      //カテゴリごとのidの最初と最後を判定するための変数
       var j = 0;
       var add_category_topic = '';
+      var add_all = '';
+      var topic_array = [];
 
-      //取得したカテゴリ/話題配列一要素単位でループする
-      category_topic_array.forEach(element => {
-        if(element['category_id'] == i){
-          //初めのループのみカテゴリ要素追加
-          if(j == 0){
-            add_category_topic += '<li>' + element['category_name'] + '</li><ul>';
-            j++;
-          }
-          //話題要素追加
-          add_category_topic += '<li>' + element['topic'] + '</li>';
-        }else{
-          j = 0;
-          i++;
-          if(j == 0){
-            add_category_topic += '</ul>';
+      //パターン
+      //カテゴリのみ登録されている
+        //→クエリでtopictableからmax(id)として取得できていないので考慮不要
+      //カテゴリと話題一つが登録されている
+      //カテゴリと話題二つ以上が登録されている
+
+      //カテゴリidの値のみが格納された配列を作成する
+      var category_id_array = category_topic_array.map(item => item.category_id);
+      //重複しないカテゴリが格納された配列を作成する
+      var category_name_array = category_topic_array.map(item => item.category_name).filter(function (x, i, self) {
+        return self.indexOf(x) === i;
+      });
+
+      //カテゴリの数だけループさせる
+      $.each(category_topic_maxid, function(index, value){
+        console.log(index + ':' + value.category_id);
+
+        //話題が入った配列のカテゴリidとループしているカテゴリidが合致する配列を作成する
+        var topic_count = category_id_array.filter(element => element == value.category_id);
+
+        //ループ中のカテゴリidと合致する話題を取得し、配列に格納する
+        for(var k = 0; k < category_topic_array.length; k++){
+          if(category_topic_array[k]['category_id'] == value.category_id){
+            topic_array.push(category_topic_array[k]);
           }
         }
-      });
-      $('.square_category').append(add_category_topic);
+
+        //category_idに合致するidの数だけループする
+        for(var i = 0; i < topic_count.length; i++){
+          //登録されている話題が1つのみの場合
+          if(j == 0 && value.max_id == topic_array[i]['id']){
+            add_category_topic += '<li>' + topic_array[i]['category_name'] + '</li><ul><li>' + topic_array[i]['topic'] + '</li></ul>';
+            add_all += add_category_topic;
+            add_category_topic = '';
+            topic_array = [];
+            break;
+          }
+          //ループ処理の初めの場合
+          else if(j == 0){
+            add_category_topic += '<li>' + topic_array[i]['category_name'] + '</li><ul><li>' + topic_array[i]['topic'] + '</li>';
+            j++;
+          //カテゴリの最大idに合致した場合
+          }else if(value.max_id == topic_array[i]['id']){
+            add_category_topic += '<li>' + topic_array[i]['topic'] + '</li></ul>';
+            j = 0;
+            add_all += add_category_topic;
+            add_category_topic = '';
+            topic_array = [];
+            break;
+          }else{
+            add_category_topic += '<li>' + topic_array[i]['topic'] + '</li>';
+          }
+        }
+      })
+      $('.square_category').append(add_all);
     });
 
     //カテゴリ選択メニューを表示または非表示にする
@@ -146,6 +186,7 @@ window.onload = $(function(){
       timespan:1000
     }).done(function(data){
       category_topic_array = data.category_topic;
+      category_topic_maxid = data.max_id;      
       console.log(category_topic_array);
       console.log(data.error);
     }).fail(function(XMLHttpRequest, textStatus, errorThrown){
