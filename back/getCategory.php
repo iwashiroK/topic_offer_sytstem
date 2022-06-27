@@ -18,10 +18,10 @@
       $count++;
     }
     $res['topic'] = $category;
-  } catch (PDOException $e) {
+  } catch (Exception $e) {
     $res['error'] = $e->getMessage().PHP_EOL . "：" . $e->getMessage() . "：" . "失敗";
-    exit;
+  }finally{
+    echo json_encode($res, JSON_UNESCAPED_UNICODE);
+    $pdo = null;
   }
-  echo json_encode($res, JSON_UNESCAPED_UNICODE);
-  $pdo = null;
 ?>

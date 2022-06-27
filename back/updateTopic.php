@@ -51,11 +51,11 @@
       $stmt->execute();
       
     }
-  } catch (PDOException $e) {
-    $res['erorr'] = $e->getMessage().PHP_EOL . $e->getMessage();
+  } catch (Exception $e) {
+    $res['error'] = $e->getMessage().PHP_EOL . $e->getMessage();
     $res['status'] = "失敗";
-    exit;
+  }finally{
+    echo json_encode($res, JSON_UNESCAPED_UNICODE);
+    $pdo = null;
   }
-  echo json_encode($res, JSON_UNESCAPED_UNICODE);
-  $pdo = null;
 ?>
